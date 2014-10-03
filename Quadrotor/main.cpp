@@ -19,17 +19,29 @@ int main(void)
 #if defined(USBCON)
 	USBDevice.attach();
 #endif
+	Bluetooth TestBluetooth;
+	TestBluetooth.initialize();
+	TestBluetooth.writeLine("Hello World! I'm starting up! :D\n");
 	
-   // initialization sequence
-	Quadrotor quadrotor;
-   quadrotor.initialize();
-    
-   // infinite loop where control functionality
-	for (;;) {
-		quadrotor.loop();
+	for (int i = 0; i < 255; i++) 
+	{
+		analogWrite(2,i);
+		analogWrite(3,i);
+		analogWrite(5,i);
+		analogWrite(6,i);
+		delay(100);
+		TestBluetooth.writeLine("The duty cycle is: ");
+		TestBluetooth.writeInt(i);
+		TestBluetooth.writeLine("\n");
 		if (serialEventRun) serialEventRun();
 	}
-        
+
+		analogWrite(2,0);
+		analogWrite(3,0);
+		analogWrite(5,0);
+		analogWrite(6,0);
+
+	while(1) {}
 	return 0;
 }
 
